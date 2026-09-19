@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Демотиватор</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Georgia&family=Impact&family=Oswald:wght@700&family=Roboto+Condensed:ital,wght@0,700;1,400&family=Playfair+Display:ital,wght@0,700;1,400&family=PT+Serif:ital,wght@0,700;1,400&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background: #131519;
+    color: #e9ecf1;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  header {
+    padding: 14px 22px;
+    border-bottom: 1px solid #262b33;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    flex: 0 0 auto;
+  }
+  header h1 { margin: 0; font-size: 17px; font-weight: 650; letter-spacing: .3px; }
+  header .hint { font-size: 12.5px; color: #7d8797; }
+
+  main {
+    flex: 1 1 auto;
+    display: grid;
+    grid-template-columns: 330px 1fr;
+    min-height: 0;
+  }
+
+  /* ---------- панель ---------- */
+  .panel {
+    border-right: 1px solid #262b33;
+    padding: 18px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    background: #171a1f;
+  }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    color: #7d8797;
+    font-weight: 600;
+  }
+  input[type=text], textarea, select {
+    width: 100%;
+    background: #0f1114;
+    border: 1px solid #2c323b;
+    border-radius: 8px;
+    color: #e9ecf1;
+    padding: 9px 11px;
+    font-size: 14px;
+    font-family: inherit;
+    transition: border-color .15s;
+  }
+  textarea { resize: vertical; min-height: 58px; line-height: 1.4; }
+  select { cursor: pointer; appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' stroke='%237d8797' stroke-width='1.6' fill='none' stroke-linecap='round'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+  }
+  input[type=text]:focus, textarea:focus, select:focus { outline: none; border-color: #4a7dff; }
+
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 11px 14px;
+    border-radius: 9px;
+    border: 1px solid #2c323b;
+    background: #1d2128;
+    color: #e9ecf1;
+    font-size: 14px;
+    font-weight: 550;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background .15s, border-color .15s, transform .05s;
+    user-select: none;
+  }
+  .btn:hover { background: #232830; border-color: #3a4250; }
+  .btn:active { transform: scale(.985); }
+  .btn.primary {
+    background: linear-gradient(180deg, #3d6dff, #2f58dd);
+    border-color: #4a7dff;
+    color: #fff;
+  }
+  .btn.primary:hover { background: linear-gradient(180deg, #4d7aff, #3a63e8); }
+  .btn:disabled { opacity: .45; cursor: not-allowed; }
+
+  .row { display: flex; gap: 8px; }
+
+  .swatch {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 13px;
+    color: #aab3c0;
+    cursor: pointer;
+    user-select: none;
+  }
+  .swatch input[type=checkbox] { accent-color: #4a7dff; width: 15px; height: 15px; cursor: pointer; }
+
+  /* ---------- секции (details) ---------- */
+  details.box {
+    border: 1px solid #262b33;
+    border-radius: 10px;
+    background: #13161b;
+    padding: 0;
+    overflow: hidden;
+  }
+  details.box > summary {
+    padding: 11px 13px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 650;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    color: #aab3c0;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    user-select: none;
+  }
+  details.box > summary::-webkit-details-marker { display: none; }
+  details.box > summary::before {
+    content: '▸';
+    display: inline-block;
+    transition: transform .15s;
+    color: #5f6a7a;
+    font-size: 11px;
+  }
+  details.box[open] > summary::before { transform: rotate(90deg); }
+  details.box > summary:hover { background: #171b21; }
+  .body {
+    padding: 4px 13px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+    border-top: 1px solid #262b33;
+  }
+
+  /* ---------- цвет ---------- */
+  .color-row { display: flex; align-items: center; gap: 10px; }
+  input[type=color] {
+    width: 42px; height: 34px;
+    padding: 2px;
+    border: 1px solid #2c323b;
+    border-radius: 8px;
+    background: #0f1114;
+    cursor: pointer;
+  }
+  input[type=color]::-webkit-color-swatch-wrapper { padding: 2px; }
+  input[type=color]::-webkit-color-swatch { border: none; border-radius: 5px; }
+  input[type=color]::-moz-color-swatch { border: none; border-radius: 5px; }
+  .color-row .hex {
+    flex: 1;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 12.5px;
+    color: #7d8797;
+    text-transform: uppercase;
+  }
+  .presets { display: flex; gap: 6px; flex-wrap: wrap; }
+  .preset-dot {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    border: 2px solid #2c323b;
+    cursor: pointer;
+    padding: 0;
+    transition: transform .1s, border-color .15s;
+  }
+  .preset-dot:hover { transform: scale(1.12); border-color: #4a7dff; }
+
+  /* ---------- диапазоны ---------- */
+  .range-row { display: flex; align-items: center; gap: 10px; }
+  input[type=range] {
+    flex: 1;
+    accent-color: #4a7dff;
+    cursor: pointer;
+    height: 4px;
+  }
+  .range-val {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 12.5px;
+    color: #8d97a8;
+    min-width: 46px;
+    text-align: right;
+  }
+
+  /* ---------- превью ---------- */
+  .stage {
+    overflow: auto;
+    padding: 28px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    background:
+      repeating-conic-gradient(#1a1d22 0% 25%, #16191d 0% 50%) 50% / 22px 22px;
+  }
+  #canvas {
+    max-width: 100%;
+    height: auto;
+    box-shadow: 0 12px 40px rgba(0,0,0,.6);
+    border-radius: 2px;
+    display: none;
+  }
+  .placeholder {
+    margin: auto;
+    text-align: center;
+    color: #5f6a7a;
+    font-size: 14.5px;
+    line-height: 1.7;
+    padding: 40px;
+    border: 2px dashed #2c323b;
+    border-radius: 14px;
+    max-width: 420px;
+  }
+  .placeholder b { color: #8d97a8; }
+  .placeholder .big { font-size: 34px; display: block; margin-bottom: 10px; }
+
+  .dropping .stage { outline: 3px dashed #4a7dff; outline-offset: -14px; }
+
+  @media (max-width: 820px) {
+    body { overflow: auto; }
+    main { grid-template-columns: 1fr; }
+    .panel { border-right: none; border-bottom: 1px solid #262b33; }
+    .stage { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Демотиватор</h1>
+  <span class="hint">перетащите картинку, вставьте из буфера (Ctrl+V) или выберите файл</span>
+</header>
+
+<main>
+  <aside class="panel">
+    <input type="file" id="file" accept="image/*" hidden>
+    <button class="btn" id="pickBtn">📁 Загрузить картинку</button>
+
+    <div class="field">
+      <label for="title">Заголовок</label>
+      <textarea id="title" placeholder="Например: КОГДА ДОДЕЛАЛ ПРОЕКТ ЗА НОЧЬ" spellcheck="false"></textarea>
+    </div>
+
+    <div class="field">
+      <label for="subtitle">Подпись (мелким шрифтом)</label>
+      <textarea id="subtitle" placeholder="и он всё равно не запускается" spellcheck="false"></textarea>
+    </div>
+
+    <label class="swatch"><input type="checkbox" id="upper"> Заголовок заглавными</label>
+
+    <!-- ======= ШРИФТЫ И РАЗМЕРЫ ======= -->
+    <details class="box" open>
+      <summary>Шрифты и размер</summary>
+      <div class="body">
+
+        <div class="field">
+          <label for="fontFamily">Шрифт</label>
+          <select id="fontFamily">
+            <option value='"Georgia", "Times New Roman", serif' selected>Georgia (классика)</option>
+            <option value='"Impact", "Arial Black", sans-serif'>Impact (плакатный)</option>
+            <option value='"Oswald", "Arial Narrow", sans-serif'>Oswald (узкий)</option>
+            <option value='"Roboto Condensed", Arial, sans-serif'>Roboto Condensed</option>
+            <option value='"Playfair Display", Georgia, serif'>Playfair Display</option>
+            <option value='"PT Serif", Georgia, serif'>PT Serif</option>
+            <option value='"JetBrains Mono", ui-monospace, monospace'>JetBrains Mono</option>
+            <option value='system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'>System UI (нейтральный)</option>
+            <option value='Arial, Helvetica, sans-serif'>Arial</option>
+            <option value='"Times New Roman", Times, serif'>Times New Roman</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="titleSize">Размер заголовка</label>
+          <div class="range-row">
+            <input type="range" id="titleSize" min="14" max="80" value="36" step="1">
+            <span class="range-val" id="titleSizeVal">36 px</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="subSize">Размер подписи</label>
+          <div class="range-row">
+            <input type="range" id="subSize" min="10" max="60" value="20" step="1">
+            <span class="range-val" id="subSizeVal">20 px</span>
+          </div>
+        </div>
+
+        <label class="swatch"><input type="checkbox" id="titleItalic"> Курсив заголовка</label>
+        <label class="swatch"><input type="checkbox" id="subBold"> Жирная подпись</label>
+
+      </div>
+    </details>
+
+    <!-- ======= РАМОЧКА ======= -->
+    <details class="box" open>
+      <summary>Рамочка</summary>
+      <div class="body">
+
+        <div class="field">
+          <label for="frameStyle">Стиль рамки</label>
+          <select id="frameStyle">
+            <option value="none">Без рамки</option>
+            <option value="thin" selected>Тонкая классическая</option>
+            <option value="thick">Толстая</option>
+            <option value="double">Двойная</option>
+            <option value="inset">Внутренняя (в кадре)</option>
+            <option value="shadow">С тенью (объёмная)</option>
+            <option value="corner">Уголки</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Цвет рамки</label>
+          <div class="color-row">
+            <input type="color" id="frameColor" value="#ffffff">
+            <span class="hex" id="hexLabel">#FFFFFF</span>
+          </div>
+          <div class="presets" id="presets">
+            <button class="preset-dot" data-c="#ffffff" style="background:#ffffff" title="Белый"></button>
+            <button class="preset-dot" data-c="#000000" style="background:#000000" title="Чёрный"></button>
+            <button class="preset-dot" data-c="#e6c34a" style="background:#e6c34a" title="Золотой"></button>
+            <button class="preset-dot" data-c="#4a7dff" style="background:#4a7dff" title="Синий"></button>
+            <button class="preset-dot" data-c="#d94a4a" style="background:#d94a4a" title="Красный"></button>
+            <button class="preset-dot" data-c="#4ad98a" style="background:#4ad98a" title="Зелёный"></button>
+            <button class="preset-dot" data-c="#9a6bd9" style="background:#9a6bd9" title="Фиолетовый"></button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="frameWidth">Толщина</label>
+          <div class="range-row">
+            <input type="range" id="frameWidth" min="1" max="30" value="3">
+            <span class="range-val" id="frameWidthVal">3 px</span>
+          </div>
+        </div>
+
+        <label class="swatch"><input type="checkbox" id="frameOutside"> Снаружи картинки</label>
+
+      </div>
+    </details>
+
+    <div class="row">
+      <button class="btn" id="clearBtn" style="flex:1">Очистить</button>
+      <button class="btn primary" id="saveBtn" style="flex:2" disabled>⬇ Скачать PNG</button>
+    </div>
+
+    <div style="flex:1"></div>
+    <div style="font-size:12px;color:#5f6a7a;line-height:1.6">
+      Всё происходит локально в браузере — картинка никуда не отправляется.
+    </div>
+  </aside>
+
+  <section class="stage" id="stage">
+    <div class="placeholder" id="placeholder">
+      <span class="big">🖼️</span>
+      <b>Пока пусто</b><br>
+      Загрузите изображение, чтобы собрать демотиватор
+    </div>
+    <canvas id="canvas"></canvas>
+  </section>
+</main>
+
+<script>
+(() => {
+  "use strict";
+
+  const CANVAS_W    = 900;
+  const PAD         = 44;
+  const IMG_GAP     = 34;
+  const TITLE_GAP   = 16;
+  const MAX_UPSCALE = 2.5;
+
+  const canvas      = document.getElementById('canvas');
+  const ctx         = canvas.getContext('2d');
+  const placeholder = document.getElementById('placeholder');
+  const fileInput   = document.getElementById('file');
+  const titleEl     = document.getElementById('title');
+  const subtitleEl  = document.getElementById('subtitle');
+  const upperEl     = document.getElementById('upper');
+  const saveBtn     = document.getElementById('saveBtn');
+  const pickBtn     = document.getElementById('pickBtn');
+  const clearBtn    = document.getElementById('clearBtn');
+
+  // шрифты / размеры
+  const fontFamilyEl  = document.getElementById('fontFamily');
+  const titleSizeEl   = document.getElementById('titleSize');
+  const subSizeEl     = document.getElementById('subSize');
+  const titleSizeVal  = document.getElementById('titleSizeVal');
+  const subSizeVal    = document.getElementById('subSizeVal');
+  const titleItalicEl = document.getElementById('titleItalic');
+  const subBoldEl     = document.getElementById('subBold');
+
+  // рамка
+  const frameStyleEl   = document.getElementById('frameStyle');
+  const frameColorEl   = document.getElementById('frameColor');
+  const frameWidthEl   = document.getElementById('frameWidth');
+  const frameWidthVal  = document.getElementById('frameWidthVal');
+  const frameOutsideEl = document.getElementById('frameOutside');
+  const hexLabel       = document.getElementById('hexLabel');
+  const presetsEl      = document.getElementById('presets');
+
+  const measureCtx = document.createElement('canvas').getContext('2d');
+  let img = null;
+  let fontsReady = false;
+
+  /* ---------- шрифты ---------- */
+
+  // Пробуем дождаться загрузки веб-шрифтов, чтобы первый рендер был точным
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => { fontsReady = true; render(); });
+  } else {
+    fontsReady = true;
+  }
+
+  function titleFont(size) {
+    const italic = titleItalicEl.checked ? 'italic ' : '';
+    return `${italic}700 ${size}px ${fontFamilyEl.value}`;
+  }
+  function subFont(size) {
+    const weight = subBoldEl.checked ? '700' : '400';
+    return `italic ${weight} ${size}px ${fontFamilyEl.value}`;
+  }
+
+  /* ---------- утилиты ---------- */
+
+  function wrapText(context, text, maxWidth) {
+    const lines = [];
+    for (const paragraph of text.split('\n')) {
+      const words = paragraph.split(/\s+/).filter(Boolean);
+      if (!words.length) { lines.push(''); continue; }
+      let line = '';
+      for (const word of words) {
+        const test = line ? line + ' ' + word : word;
+        if (context.measureText(test).width > maxWidth && line) {
+          lines.push(line);
+          line = word;
+        } else {
+          line = test;
+        }
+      }
+      if (line) lines.push(line);
+    }
+    return lines;
+  }
+
+  function updateHexLabel() {
+    hexLabel.textContent = frameColorEl.value.toUpperCase();
+  }
+
+  /* ---------- рисование рамок ---------- */
+
+  function drawFrame(x, y, w, h, inside) {
+    const style = frameStyleEl.value;
+    if (style === 'none') return;
+
+    const color = frameColorEl.value;
+    const t = parseInt(frameWidthEl.value, 10) || 3;
+
+    if (inside) {
+      x += t / 2; y += t / 2; w -= t; h -= t;
+    } else {
+      x -= t / 2; y -= t / 2; w += t; h += t;
+    }
+    if (w <= 0 || h <= 0) return;
+
+    ctx.save();
+    ctx.strokeStyle = color;
+
+    switch (style) {
+      case 'thin':
+      case 'thick': {
+        ctx.lineWidth = t;
+        ctx.strokeRect(x, y, w, h);
+        break;
+      }
+      case 'double': {
+        const outer = t;
+        const inner = Math.max(1, Math.round(t * 0.55));
+        const gap = Math.max(3, Math.round(t * 0.9));
+        ctx.lineWidth = outer;
+        ctx.strokeRect(x, y, w, h);
+        ctx.lineWidth = inner;
+        ctx.strokeRect(
+          x + outer / 2 + gap + inner / 2,
+          y + outer / 2 + gap + inner / 2,
+          w - (outer + gap * 2 + inner),
+          h - (outer + gap * 2 + inner)
+        );
+        break;
+      }
+      case 'inset': {
+        const inset = Math.max(t, 6);
+        ctx.lineWidth = t;
+        ctx.strokeRect(x + inset, y + inset, w - inset * 2, h - inset * 2);
+        break;
+      }
+      case 'shadow': {
+        ctx.lineWidth = t;
+        ctx.strokeStyle = 'rgba(0,0,0,0.55)';
+        ctx.strokeRect(x + t * 0.6, y + t * 0.6, w, h);
+        ctx.strokeStyle = color;
+        ctx.strokeRect(x, y, w, h);
+        break;
+      }
+      case 'corner': {
+        const len = Math.min(w, h) * 0.18;
+        ctx.lineWidth = t;
+        ctx.lineCap = 'square';
+        ctx.beginPath();
+        ctx.moveTo(x, y + len); ctx.lineTo(x, y); ctx.lineTo(x + len, y);
+        ctx.moveTo(x + w - len, y); ctx.lineTo(x + w, y); ctx.lineTo(x + w, y + len);
+        ctx.moveTo(x + w, y + h - len); ctx.lineTo(x + w, y + h); ctx.lineTo(x + w - len, y + h);
+        ctx.moveTo(x + len, y + h); ctx.lineTo(x, y + h); ctx.lineTo(x, y + h - len);
+        ctx.stroke();
+        break;
+      }
+    }
+    ctx.restore();
+  }
+
+  /* ---------- отрисовка ---------- */
+
+  function render() {
+    if (!img) {
+      canvas.style.display = 'none';
+      placeholder.style.display = '';
+      saveBtn.disabled = true;
+      return;
+    }
+
+    const maxImgW = CANVAS_W - PAD * 2;
+    const TITLE_SIZE = parseInt(titleSizeEl.value, 10);
+    const SUB_SIZE   = parseInt(subSizeEl.value, 10);
+    const TITLE_LH   = TITLE_SIZE * 1.20;
+    const SUB_LH     = SUB_SIZE   * 1.35;
+
+    // масштаб картинки
+    let scale = maxImgW / img.width;
+    if (scale > 1) scale = Math.min(scale, MAX_UPSCALE);
+    const iw = Math.max(1, Math.round(img.width  * scale));
+    const ih = Math.max(1, Math.round(img.height * scale));
+
+    // тексты
+    let title = titleEl.value.trim();
+    if (upperEl.checked && title) title = title.toLocaleUpperCase('ru-RU');
+    const subtitle = subtitleEl.value.trim();
+
+    let titleLines = [], subLines = [];
+
+    if (title) {
+      measureCtx.font = titleFont(TITLE_SIZE);
+      titleLines = wrapText(measureCtx, title, maxImgW);
+    }
+    if (subtitle) {
+      measureCtx.font = subFont(SUB_SIZE);
+      subLines = wrapText(measureCtx, subtitle, maxImgW);
+    }
+
+    // высота полотна
+    let height = PAD + ih;
+    if (titleLines.length) height += IMG_GAP + titleLines.length * TITLE_LH;
+    if (subLines.length)   height += (titleLines.length ? TITLE_GAP : IMG_GAP) + subLines.length * SUB_LH;
+    height += PAD;
+    height = Math.round(height);
+
+    canvas.width  = CANVAS_W;
+    canvas.height = height;
+
+    // фон
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, CANVAS_W, height);
+
+    // картинка
+    const ix = Math.round((CANVAS_W - iw) / 2);
+    const iy = PAD;
+
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(img, ix, iy, iw, ih);
+
+    // рамка вокруг картинки
+    drawFrame(ix, iy, iw, ih, !frameOutsideEl.checked);
+
+    // текст
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    ctx.fillStyle = '#fff';
+
+    let y = iy + ih;
+
+    if (titleLines.length) {
+      y += IMG_GAP;
+      ctx.font = titleFont(TITLE_SIZE);
+      for (const line of titleLines) {
+        ctx.fillText(line, CANVAS_W / 2, y);
+        y += TITLE_LH;
+      }
+    }
+
+    if (subLines.length) {
+      y += titleLines.length ? TITLE_GAP : IMG_GAP;
+      ctx.font = subFont(SUB_SIZE);
+      for (const line of subLines) {
+        ctx.fillText(line, CANVAS_W / 2, y);
+        y += SUB_LH;
+      }
+    }
+
+    canvas.style.display = 'block';
+    placeholder.style.display = 'none';
+    saveBtn.disabled = false;
+  }
+
+  /* ---------- загрузка картинки ---------- */
+
+  function loadFile(file) {
+    if (!file || !file.type.startsWith('image/')) return;
+    const url = URL.createObjectURL(file);
+    const image = new Image();
+    image.onload = () => {
+      img = image;
+      URL.revokeObjectURL(url);
+      render();
+    };
+    image.onerror = () => URL.revokeObjectURL(url);
+    image.src = url;
+  }
+
+  /* ---------- события ---------- */
+
+  pickBtn.addEventListener('click', () => fileInput.click());
+
+  fileInput.addEventListener('change', e => {
+    if (e.target.files[0]) loadFile(e.target.files[0]);
+    fileInput.value = '';
+  });
+
+  [titleEl, subtitleEl].forEach(el => el.addEventListener('input', render));
+  upperEl.addEventListener('change', render);
+
+  // шрифты и размеры
+  fontFamilyEl.addEventListener('change', render);
+  titleItalicEl.addEventListener('change', render);
+  subBoldEl.addEventListener('change', render);
+  titleSizeEl.addEventListener('input', () => {
+    titleSizeVal.textContent = titleSizeEl.value + ' px';
+    render();
+  });
+  subSizeEl.addEventListener('input', () => {
+    subSizeVal.textContent = subSizeEl.value + ' px';
+    render();
+  });
+
+  // рамка
+  frameStyleEl.addEventListener('change', render);
+  frameColorEl.addEventListener('input', () => { updateHexLabel(); render(); });
+  frameWidthEl.addEventListener('input', () => {
+    frameWidthVal.textContent = frameWidthEl.value + ' px';
+    render();
+  });
+  frameOutsideEl.addEventListener('change', render);
+
+  presetsEl.addEventListener('click', e => {
+    const btn = e.target.closest('.preset-dot');
+    if (!btn) return;
+    frameColorEl.value = btn.dataset.c;
+    updateHexLabel();
+    render();
+  });
+
+  // сохранение
+  saveBtn.addEventListener('click', () => {
+    if (!img) return;
+    canvas.toBlob(blob => {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      const stamp = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-');
+      a.download = `demotivator-${stamp}.png`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+    }, 'image/png');
+  });
+
+  clearBtn.addEventListener('click', () => {
+    img = null;
+    titleEl.value = '';
+    subtitleEl.value = '';
+    render();
+  });
+
+  // Drag & drop
+  let dragDepth = 0;
+  window.addEventListener('dragenter', e => {
+    e.preventDefault();
+    if (++dragDepth === 1) document.body.classList.add('dropping');
+  });
+  window.addEventListener('dragover', e => e.preventDefault());
+  window.addEventListener('dragleave', e => {
+    e.preventDefault();
+    if (--dragDepth <= 0) { dragDepth = 0; document.body.classList.remove('dropping'); }
+  });
+  window.addEventListener('drop', e => {
+    e.preventDefault();
+    dragDepth = 0;
+    document.body.classList.remove('dropping');
+    const file = e.dataTransfer?.files?.[0];
+    if (file) loadFile(file);
+  });
+
+  // Вставка из буфера
+  window.addEventListener('paste', e => {
+    const items = e.clipboardData?.items;
+    if (!items) return;
+    for (const item of items) {
+      if (item.type.startsWith('image/')) {
+        e.preventDefault();
+        loadFile(item.getAsFile());
+        return;
+      }
+    }
+  });
+
+  updateHexLabel();
+  render();
+})();
+</script>
+</body>
+</html>
