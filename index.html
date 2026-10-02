@@ -2,11 +2,17 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Демотиватор</title>
+
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%23131519'/><rect x='8' y='8' width='48' height='32' rx='3' fill='%233d6dff'/><rect x='8' y='6' width='48' height='36' rx='3' fill='none' stroke='white' stroke-width='3'/><rect x='12' y='46' width='40' height='5' rx='2' fill='white'/><rect x='16' y='55' width='32' height='3' rx='1.5' fill='%238d97a8'/></svg>">
+<link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%23131519'/><rect x='8' y='8' width='48' height='32' rx='3' fill='%233d6dff'/><rect x='8' y='6' width='48' height='36' rx='3' fill='none' stroke='white' stroke-width='3'/><rect x='12' y='46' width='40' height='5' rx='2' fill='white'/><rect x='16' y='55' width='32' height='3' rx='1.5' fill='%238d97a8'/></svg>">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Georgia&family=Impact&family=Oswald:wght@700&family=Roboto+Condensed:ital,wght@0,700;1,400&family=Playfair+Display:ital,wght@0,700;1,400&family=PT+Serif:ital,wght@0,700;1,400&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Impact&family=Oswald:wght@700&family=Roboto+Condensed:ital,wght@0,700;1,400&family=Playfair+Display:ital,wght@0,700;1,400&family=PT+Serif:ital,wght@0,700;1,400&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+
 <style>
   * { box-sizing: border-box; }
   html, body { height: 100%; }
@@ -18,6 +24,7 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
   }
   header {
     padding: 14px 22px;
@@ -37,7 +44,7 @@
     min-height: 0;
   }
 
-  /* ---------- панель ---------- */
+
   .panel {
     border-right: 1px solid #262b33;
     padding: 18px;
@@ -46,6 +53,7 @@
     flex-direction: column;
     gap: 14px;
     background: #171a1f;
+    -webkit-overflow-scrolling: touch;
   }
   .field { display: flex; flex-direction: column; gap: 6px; }
   .field label {
@@ -81,7 +89,7 @@
     justify-content: center;
     gap: 8px;
     width: 100%;
-    padding: 11px 14px;
+    padding: 12px 14px;
     border-radius: 9px;
     border: 1px solid #2c323b;
     background: #1d2128;
@@ -92,6 +100,8 @@
     cursor: pointer;
     transition: background .15s, border-color .15s, transform .05s;
     user-select: none;
+    min-height: 44px;
+    touch-action: manipulation;
   }
   .btn:hover { background: #232830; border-color: #3a4250; }
   .btn:active { transform: scale(.985); }
@@ -113,8 +123,9 @@
     color: #aab3c0;
     cursor: pointer;
     user-select: none;
+    padding: 4px 0;
   }
-  .swatch input[type=checkbox] { accent-color: #4a7dff; width: 15px; height: 15px; cursor: pointer; }
+  .swatch input[type=checkbox] { accent-color: #4a7dff; width: 16px; height: 16px; cursor: pointer; flex: 0 0 auto; }
 
   /* ---------- секции (details) ---------- */
   details.box {
@@ -125,7 +136,7 @@
     overflow: hidden;
   }
   details.box > summary {
-    padding: 11px 13px;
+    padding: 12px 13px;
     cursor: pointer;
     font-size: 13px;
     font-weight: 650;
@@ -137,6 +148,7 @@
     align-items: center;
     gap: 8px;
     user-select: none;
+    min-height: 44px;
   }
   details.box > summary::-webkit-details-marker { display: none; }
   details.box > summary::before {
@@ -159,7 +171,7 @@
   /* ---------- цвет ---------- */
   .color-row { display: flex; align-items: center; gap: 10px; }
   input[type=color] {
-    width: 42px; height: 34px;
+    width: 46px; height: 38px;
     padding: 2px;
     border: 1px solid #2c323b;
     border-radius: 8px;
@@ -178,12 +190,13 @@
   }
   .presets { display: flex; gap: 6px; flex-wrap: wrap; }
   .preset-dot {
-    width: 26px; height: 26px;
+    width: 30px; height: 30px;
     border-radius: 50%;
     border: 2px solid #2c323b;
     cursor: pointer;
     padding: 0;
     transition: transform .1s, border-color .15s;
+    touch-action: manipulation;
   }
   .preset-dot:hover { transform: scale(1.12); border-color: #4a7dff; }
 
@@ -193,7 +206,8 @@
     flex: 1;
     accent-color: #4a7dff;
     cursor: pointer;
-    height: 4px;
+    height: 28px;
+    touch-action: manipulation;
   }
   .range-val {
     font-family: ui-monospace, "SF Mono", Menlo, monospace;
@@ -201,6 +215,113 @@
     color: #8d97a8;
     min-width: 46px;
     text-align: right;
+  }
+
+  /* ========== КАДРИРОВАНИЕ ========== */
+  .crop-wrap {
+    position: relative;
+    display: none;
+    margin-top: 4px;
+  }
+  .crop-wrap.active { display: block; }
+  .crop-stage {
+    position: relative;
+    background: #0a0b0d;
+    border-radius: 8px;
+    overflow: hidden;
+    user-select: none;
+    touch-action: none;
+    margin: 0 auto;
+    line-height: 0;
+  }
+  .crop-stage img {
+    display: block;
+    width: 100%;
+    height: auto;
+    pointer-events: none;
+    -webkit-user-drag: none;
+  }
+  .crop-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .crop-mask {
+    position: absolute;
+    background: rgba(0,0,0,.62);
+    pointer-events: none;
+  }
+  .crop-rect {
+    position: absolute;
+    border: 2px solid #4a7dff;
+    box-shadow: 0 0 0 9999px rgba(0,0,0,0);
+    cursor: move;
+    pointer-events: auto;
+    touch-action: none;
+    box-sizing: border-box;
+  }
+  .crop-grid {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .crop-grid::before,
+  .crop-grid::after {
+    content: '';
+    position: absolute;
+    background: rgba(255,255,255,.28);
+  }
+  .crop-grid::before {
+    left: 33.33%; top: 0; width: 1px; height: 100%;
+    box-shadow: calc(33.33% + 0px) 0 0 rgba(255,255,255,.28);
+  }
+  .crop-grid::after {
+    top: 33.33%; left: 0; height: 1px; width: 100%;
+    box-shadow: 0 calc(33.33% + 0px) 0 rgba(255,255,255,.28);
+  }
+  .crop-handle {
+    position: absolute;
+    width: 22px; height: 22px;
+    background: transparent;
+    touch-action: none;
+  }
+  .crop-handle::after {
+    content: '';
+    position: absolute;
+    width: 11px; height: 11px;
+    background: #4a7dff;
+    border: 2px solid #fff;
+    border-radius: 3px;
+    box-sizing: border-box;
+  }
+  /* позиции уголков */
+  .crop-handle[data-h="nw"] { left: -11px; top: -11px; cursor: nwse-resize; }
+  .crop-handle[data-h="nw"]::after { left: 5px; top: 5px; }
+  .crop-handle[data-h="ne"] { right: -11px; top: -11px; cursor: nesw-resize; }
+  .crop-handle[data-h="ne"]::after { right: 5px; top: 5px; }
+  .crop-handle[data-h="sw"] { left: -11px; bottom: -11px; cursor: nesw-resize; }
+  .crop-handle[data-h="sw"]::after { left: 5px; bottom: 5px; }
+  .crop-handle[data-h="se"] { right: -11px; bottom: -11px; cursor: nwse-resize; }
+  .crop-handle[data-h="se"]::after { right: 5px; bottom: 5px; }
+
+  .crop-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .crop-info {
+    font-size: 11.5px;
+    color: #5f6a7a;
+    margin-top: 6px;
+    text-align: center;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  .crop-empty {
+    font-size: 12.5px;
+    color: #5f6a7a;
+    text-align: center;
+    padding: 14px 6px;
+    line-height: 1.5;
   }
 
   /* ---------- превью ---------- */
@@ -212,6 +333,7 @@
     justify-content: center;
     background:
       repeating-conic-gradient(#1a1d22 0% 25%, #16191d 0% 50%) 50% / 22px 22px;
+    -webkit-overflow-scrolling: touch;
   }
   #canvas {
     max-width: 100%;
@@ -226,7 +348,7 @@
     color: #5f6a7a;
     font-size: 14.5px;
     line-height: 1.7;
-    padding: 40px;
+    padding: 40px 24px;
     border: 2px dashed #2c323b;
     border-radius: 14px;
     max-width: 420px;
@@ -236,11 +358,81 @@
 
   .dropping .stage { outline: 3px dashed #4a7dff; outline-offset: -14px; }
 
-  @media (max-width: 820px) {
+  /* ========== МОБИЛЬНАЯ АДАПТАЦИЯ ========== */
+  @media (max-width: 860px) {
+    html, body { height: auto; min-height: 100%; }
     body { overflow: auto; }
-    main { grid-template-columns: 1fr; }
-    .panel { border-right: none; border-bottom: 1px solid #262b33; }
-    .stage { padding: 16px; }
+
+    header {
+      padding: 12px 16px;
+      flex-wrap: wrap;
+      gap: 4px 12px;
+    }
+    header h1 { font-size: 16px; }
+    header .hint {
+      font-size: 11.5px;
+      flex-basis: 100%;
+    }
+
+    main {
+      grid-template-columns: 1fr;
+      min-height: 0;
+    }
+    .panel {
+      border-right: none;
+      border-bottom: 1px solid #262b33;
+      padding: 14px;
+      order: 2;
+      overflow: visible;
+    }
+    .stage {
+      order: 1;
+      padding: 14px;
+      min-height: 220px;
+      max-height: 55vh;
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      border-bottom: 1px solid #262b33;
+    }
+    #canvas { max-width: 100%; }
+
+    .placeholder {
+      padding: 24px 16px;
+      font-size: 13.5px;
+      max-width: 100%;
+    }
+    .placeholder .big { font-size: 28px; }
+
+    .row { flex-wrap: wrap; }
+    .row .btn { flex: 1 1 auto; min-width: 120px; }
+
+    .field label { font-size: 11.5px; }
+    input[type=text], textarea, select { font-size: 16px; } /* против автозума iOS */
+
+    .preset-dot { width: 34px; height: 34px; }
+
+    .crop-handle { width: 28px; height: 28px; }
+    .crop-handle::after { width: 14px; height: 14px; }
+    .crop-handle[data-h="nw"] { left: -14px; top: -14px; }
+    .crop-handle[data-h="nw"]::after { left: 6px; top: 6px; }
+    .crop-handle[data-h="ne"] { right: -14px; top: -14px; }
+    .crop-handle[data-h="ne"]::after { right: 6px; top: 6px; }
+    .crop-handle[data-h="sw"] { left: -14px; bottom: -14px; }
+    .crop-handle[data-h="sw"]::after { left: 6px; bottom: 6px; }
+    .crop-handle[data-h="se"] { right: -14px; bottom: -14px; }
+    .crop-handle[data-h="se"]::after { right: 6px; bottom: 6px; }
+  }
+
+  @media (max-width: 420px) {
+    header h1 { font-size: 15px; }
+    .panel { padding: 11px; gap: 11px; }
+    .stage { padding: 10px; max-height: 45vh; }
+  }
+
+  /* На очень широких экранах не растягиваем панель */
+  @media (min-width: 1400px) {
+    main { grid-template-columns: 360px 1fr; }
   }
 </style>
 </head>
@@ -255,6 +447,52 @@
   <aside class="panel">
     <input type="file" id="file" accept="image/*" hidden>
     <button class="btn" id="pickBtn">📁 Загрузить картинку</button>
+
+    <!-- ======= КАДРИРОВАНИЕ ======= -->
+    <details class="box" id="cropBox">
+      <summary>Кадрирование</summary>
+      <div class="body">
+
+        <div class="field">
+          <label for="aspectSelect">Пропорции кадра</label>
+          <select id="aspectSelect">
+            <option value="free">Свободно</option>
+            <option value="1">1 : 1 (квадрат)</option>
+            <option value="0.75">4 : 3</option>
+            <option value="1.3333">3 : 4</option>
+            <option value="0.5625">16 : 9</option>
+            <option value="1.7778">9 : 16</option>
+            <option value="0.6667">3 : 2</option>
+            <option value="1.5">2 : 3</option>
+          </select>
+        </div>
+
+        <div class="crop-empty" id="cropEmpty">
+          Сначала загрузите картинку
+        </div>
+
+        <div class="crop-wrap" id="cropWrap">
+          <div class="crop-stage" id="cropStage">
+            <img id="cropImg" alt="">
+            <div class="crop-overlay">
+              <div class="crop-rect" id="cropRect">
+                <div class="crop-grid"></div>
+                <div class="crop-handle" data-h="nw"></div>
+                <div class="crop-handle" data-h="ne"></div>
+                <div class="crop-handle" data-h="sw"></div>
+                <div class="crop-handle" data-h="se"></div>
+              </div>
+            </div>
+          </div>
+          <div class="crop-info" id="cropInfo"></div>
+          <div class="crop-actions">
+            <button class="btn" id="cropReset" style="flex:1">Сброс</button>
+            <button class="btn primary" id="cropApply" style="flex:1.4">Применить</button>
+          </div>
+        </div>
+
+      </div>
+    </details>
 
     <div class="field">
       <label for="title">Заголовок</label>
@@ -364,7 +602,7 @@
       <button class="btn primary" id="saveBtn" style="flex:2" disabled>⬇ Скачать PNG</button>
     </div>
 
-    <div style="flex:1"></div>
+    <div style="flex:1; min-height: 6px;"></div>
     <div style="font-size:12px;color:#5f6a7a;line-height:1.6">
       Всё происходит локально в браузере — картинка никуда не отправляется.
     </div>
@@ -401,7 +639,7 @@
   const pickBtn     = document.getElementById('pickBtn');
   const clearBtn    = document.getElementById('clearBtn');
 
-  // шрифты / размеры
+
   const fontFamilyEl  = document.getElementById('fontFamily');
   const titleSizeEl   = document.getElementById('titleSize');
   const subSizeEl     = document.getElementById('subSize');
@@ -410,7 +648,7 @@
   const titleItalicEl = document.getElementById('titleItalic');
   const subBoldEl     = document.getElementById('subBold');
 
-  // рамка
+
   const frameStyleEl   = document.getElementById('frameStyle');
   const frameColorEl   = document.getElementById('frameColor');
   const frameWidthEl   = document.getElementById('frameWidth');
@@ -419,17 +657,28 @@
   const hexLabel       = document.getElementById('hexLabel');
   const presetsEl      = document.getElementById('presets');
 
+
+  const cropBox     = document.getElementById('cropBox');
+  const cropWrap    = document.getElementById('cropWrap');
+  const cropEmpty   = document.getElementById('cropEmpty');
+  const cropStage   = document.getElementById('cropStage');
+  const cropImg     = document.getElementById('cropImg');
+  const cropRect    = document.getElementById('cropRect');
+  const cropInfo    = document.getElementById('cropInfo');
+  const aspectSel   = document.getElementById('aspectSelect');
+  const cropReset   = document.getElementById('cropReset');
+  const cropApply   = document.getElementById('cropApply');
+
   const measureCtx = document.createElement('canvas').getContext('2d');
+
   let img = null;
-  let fontsReady = false;
+  let cropState = null;
+  let cropView  = null;
 
-  /* ---------- шрифты ---------- */
 
-  // Пробуем дождаться загрузки веб-шрифтов, чтобы первый рендер был точным
+
   if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(() => { fontsReady = true; render(); });
-  } else {
-    fontsReady = true;
+    document.fonts.ready.then(() => render());
   }
 
   function titleFont(size) {
@@ -441,7 +690,7 @@
     return `italic ${weight} ${size}px ${fontFamilyEl.value}`;
   }
 
-  /* ---------- утилиты ---------- */
+
 
   function wrapText(context, text, maxWidth) {
     const lines = [];
@@ -467,7 +716,9 @@
     hexLabel.textContent = frameColorEl.value.toUpperCase();
   }
 
-  /* ---------- рисование рамок ---------- */
+  function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
+
+
 
   function drawFrame(x, y, w, h, inside) {
     const style = frameStyleEl.value;
@@ -538,7 +789,275 @@
     ctx.restore();
   }
 
-  /* ---------- отрисовка ---------- */
+
+
+
+  function openCrop() {
+    if (!img) return;
+    cropEmpty.style.display = 'none';
+    cropWrap.classList.add('active');
+    cropImg.src = img.src;
+
+    cropState = { x: 0, y: 0, w: img.naturalWidth, h: img.naturalHeight };
+
+    requestAnimationFrame(() => {
+      layoutCropStage();
+      applyAspectIfNeeded(true);
+      syncCropRect();
+    });
+  }
+
+
+  function layoutCropStage() {
+    if (!img) return;
+    const panelWidth = cropStage.parentElement.clientWidth
+      || cropStage.clientWidth
+      || 280;
+    const maxW = Math.max(160, panelWidth);
+    const maxH = Math.min(window.innerHeight * 0.5, 420);
+
+    const ratio = img.naturalWidth / img.naturalHeight;
+    let dispW = maxW;
+    let dispH = dispW / ratio;
+    if (dispH > maxH) {
+      dispH = maxH;
+      dispW = dispH * ratio;
+    }
+    dispW = Math.round(dispW);
+    dispH = Math.round(dispH);
+
+    cropStage.style.width  = dispW + 'px';
+    cropStage.style.height = dispH + 'px';
+
+    cropView = {
+      dispW, dispH,
+      scale: img.naturalWidth / dispW
+    };
+  }
+
+
+  function applyAspectIfNeeded(reset) {
+    const asp = aspectSel.value;
+    if (asp === 'free' || !cropView || !cropState) return;
+
+    const target = parseFloat(asp);
+
+    let w = cropState.w;
+    let h = w / target;
+
+    if (reset) {
+
+      if (h > img.naturalHeight) {
+        h = img.naturalHeight;
+        w = h * target;
+      }
+      cropState.w = w;
+      cropState.h = h;
+      cropState.x = (img.naturalWidth  - w) / 2;
+      cropState.y = (img.naturalHeight - h) / 2;
+    } else {
+
+      const cx = cropState.x + cropState.w / 2;
+      const cy = cropState.y + cropState.h / 2;
+      if (h > img.naturalHeight) { h = img.naturalHeight; w = h * target; }
+      if (w > img.naturalWidth)  { w = img.naturalWidth;  h = w / target; }
+      cropState.w = w;
+      cropState.h = h;
+      cropState.x = clamp(cx - w / 2, 0, img.naturalWidth  - w);
+      cropState.y = clamp(cy - h / 2, 0, img.naturalHeight - h);
+    }
+  }
+
+
+  function syncCropRect() {
+    if (!cropView || !cropState) return;
+
+    const k = 1 / cropView.scale;
+    const left   = cropState.x * k;
+    const top    = cropState.y * k;
+    const width  = cropState.w * k;
+    const height = cropState.h * k;
+
+    cropRect.style.left   = left   + 'px';
+    cropRect.style.top    = top    + 'px';
+    cropRect.style.width  = width  + 'px';
+    cropRect.style.height = height + 'px';
+
+
+    cropInfo.textContent =
+      `${Math.round(cropState.w)} × ${Math.round(cropState.h)} px` +
+      `  ·  ${(cropState.w / cropState.h).toFixed(2)} : 1`;
+
+
+    const old = cropStage.querySelectorAll('.crop-mask');
+    old.forEach(el => el.remove());
+
+
+    const masks = [
+      { l: 0, t: 0, w: cropStage.clientWidth, h: top },
+      { l: 0, t: top + height, w: cropStage.clientWidth, h: cropStage.clientHeight - top - height },
+      { l: 0, t: top, w: left, h: height },
+      { l: left + width, t: top, w: cropStage.clientWidth - left - width, h: height }
+    ];
+    for (const m of masks) {
+      if (m.w <= 0 || m.h <= 0) continue;
+      const d = document.createElement('div');
+      d.className = 'crop-mask';
+      d.style.left   = m.l + 'px';
+      d.style.top    = m.t + 'px';
+      d.style.width  = m.w + 'px';
+      d.style.height = m.h + 'px';
+      cropStage.querySelector('.crop-overlay').appendChild(d);
+    }
+  }
+
+
+
+  let dragMode = null;
+  let dragPointerId = null;
+
+  function pointerPos(e) {
+    const rect = cropStage.getBoundingClientRect();
+    return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+  }
+
+  function beginDrag(e, type, handle) {
+    if (!cropView || !cropState) return;
+    e.preventDefault();
+    e.stopPropagation();
+    const p = pointerPos(e);
+    dragMode = {
+      type, handle,
+      startPx: p,
+      start: { ...cropState }
+    };
+    dragPointerId = e.pointerId;
+    cropStage.setPointerCapture?.(e.pointerId);
+    window.addEventListener('pointermove', onDragMove);
+    window.addEventListener('pointerup', endDrag);
+    window.addEventListener('pointercancel', endDrag);
+  }
+
+  function onDragMove(e) {
+    if (!dragMode || !cropView) return;
+    e.preventDefault();
+    const p = pointerPos(e);
+    const dx = (p.x - dragMode.startPx.x) * cropView.scale;
+    const dy = (p.y - dragMode.startPx.y) * cropView.scale;
+    const s = dragMode.start;
+    const maxW = img.naturalWidth;
+    const maxH = img.naturalHeight;
+
+    const asp = aspectSel.value;
+    const lockedAspect = asp !== 'free' ? parseFloat(asp) : null;
+
+    let nx = s.x, ny = s.y, nw = s.w, nh = s.h;
+
+    if (dragMode.type === 'move') {
+      nx = clamp(s.x + dx, 0, maxW - s.w);
+      ny = clamp(s.y + dy, 0, maxH - s.h);
+    } else {
+      // resize по углам
+      const h = dragMode.handle;
+      if (h === 'nw') {
+        nx = clamp(s.x + dx, 0, s.x + s.w - 24);
+        ny = clamp(s.y + dy, 0, s.y + s.h - 24);
+        nw = s.x + s.w - nx;
+        nh = s.y + s.h - ny;
+      } else if (h === 'ne') {
+        ny = clamp(s.y + dy, 0, s.y + s.h - 24);
+        nw = clamp(s.w + dx, 24, maxW - s.x);
+        nh = s.y + s.h - ny;
+      } else if (h === 'sw') {
+        nx = clamp(s.x + dx, 0, s.x + s.w - 24);
+        nw = s.x + s.w - nx;
+        nh = clamp(s.h + dy, 24, maxH - s.y);
+      } else if (h === 'se') {
+        nw = clamp(s.w + dx, 24, maxW - s.x);
+        nh = clamp(s.h + dy, 24, maxH - s.y);
+      }
+
+      if (lockedAspect) {
+
+        if (h === 'nw' || h === 'se') {
+          nh = nw / lockedAspect;
+          if (nh > maxH - ny) { nh = maxH - ny; nw = nh * lockedAspect; }
+          if (h === 'nw') { nx = s.x + s.w - nw; ny = s.y + s.h - nh; }
+        } else {
+          nh = nw / lockedAspect;
+          if (nh > maxH - ny) { nh = maxH - ny; nw = nh * lockedAspect; }
+          if (h === 'ne') { ny = s.y + s.h - nh; }
+          if (h === 'sw') { nx = s.x + s.w - nw; }
+        }
+      }
+    }
+
+    cropState = { x: nx, y: ny, w: nw, h: nh };
+    syncCropRect();
+  }
+
+  function endDrag() {
+    dragMode = null;
+    dragPointerId = null;
+    window.removeEventListener('pointermove', onDragMove);
+    window.removeEventListener('pointerup', endDrag);
+    window.removeEventListener('pointercancel', endDrag);
+  }
+
+
+  cropRect.addEventListener('pointerdown', e => {
+    if (e.target.classList.contains('crop-handle')) return;
+    beginDrag(e, 'move');
+  });
+  cropRect.querySelectorAll('.crop-handle').forEach(hEl => {
+    hEl.addEventListener('pointerdown', e => {
+      beginDrag(e, 'resize', hEl.dataset.h);
+    });
+  });
+
+  aspectSel.addEventListener('change', () => {
+    if (!cropState) return;
+    applyAspectIfNeeded(true);
+    syncCropRect();
+  });
+
+  cropReset.addEventListener('click', () => {
+    if (!img) return;
+    cropState = { x: 0, y: 0, w: img.naturalWidth, h: img.naturalHeight };
+    applyAspectIfNeeded(true);
+    syncCropRect();
+  });
+
+
+  cropApply.addEventListener('click', () => {
+    if (!img || !cropState) return;
+    const { x, y, w, h } = cropState;
+    const outW = Math.max(1, Math.round(w));
+    const outH = Math.max(1, Math.round(h));
+
+    const off = document.createElement('canvas');
+    off.width  = outW;
+    off.height = outH;
+    const octx = off.getContext('2d');
+    octx.imageSmoothingEnabled = true;
+    octx.imageSmoothingQuality = 'high';
+    octx.drawImage(
+      img,
+      Math.round(x), Math.round(y), outW, outH,
+      0, 0, outW, outH
+    );
+
+    const newImg = new Image();
+    newImg.onload = () => {
+      img = newImg;
+
+      openCrop();
+      render();
+    };
+    newImg.src = off.toDataURL('image/png');
+  });
+
+
 
   function render() {
     if (!img) {
@@ -554,13 +1073,13 @@
     const TITLE_LH   = TITLE_SIZE * 1.20;
     const SUB_LH     = SUB_SIZE   * 1.35;
 
-    // масштаб картинки
-    let scale = maxImgW / img.width;
-    if (scale > 1) scale = Math.min(scale, MAX_UPSCALE);
-    const iw = Math.max(1, Math.round(img.width  * scale));
-    const ih = Math.max(1, Math.round(img.height * scale));
 
-    // тексты
+    let scale = maxImgW / img.naturalWidth;
+    if (scale > 1) scale = Math.min(scale, MAX_UPSCALE);
+    const iw = Math.max(1, Math.round(img.naturalWidth  * scale));
+    const ih = Math.max(1, Math.round(img.naturalHeight * scale));
+
+
     let title = titleEl.value.trim();
     if (upperEl.checked && title) title = title.toLocaleUpperCase('ru-RU');
     const subtitle = subtitleEl.value.trim();
@@ -576,7 +1095,7 @@
       subLines = wrapText(measureCtx, subtitle, maxImgW);
     }
 
-    // высота полотна
+
     let height = PAD + ih;
     if (titleLines.length) height += IMG_GAP + titleLines.length * TITLE_LH;
     if (subLines.length)   height += (titleLines.length ? TITLE_GAP : IMG_GAP) + subLines.length * SUB_LH;
@@ -586,11 +1105,9 @@
     canvas.width  = CANVAS_W;
     canvas.height = height;
 
-    // фон
     ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, CANVAS_W, height);
 
-    // картинка
     const ix = Math.round((CANVAS_W - iw) / 2);
     const iy = PAD;
 
@@ -598,10 +1115,10 @@
     ctx.imageSmoothingQuality = 'high';
     ctx.drawImage(img, ix, iy, iw, ih);
 
-    // рамка вокруг картинки
+
     drawFrame(ix, iy, iw, ih, !frameOutsideEl.checked);
 
-    // текст
+
     ctx.textAlign = 'center';
     ctx.textBaseline = 'top';
     ctx.fillStyle = '#fff';
@@ -631,7 +1148,7 @@
     saveBtn.disabled = false;
   }
 
-  /* ---------- загрузка картинки ---------- */
+
 
   function loadFile(file) {
     if (!file || !file.type.startsWith('image/')) return;
@@ -640,13 +1157,14 @@
     image.onload = () => {
       img = image;
       URL.revokeObjectURL(url);
+      openCrop();
       render();
     };
     image.onerror = () => URL.revokeObjectURL(url);
     image.src = url;
   }
 
-  /* ---------- события ---------- */
+
 
   pickBtn.addEventListener('click', () => fileInput.click());
 
@@ -658,7 +1176,7 @@
   [titleEl, subtitleEl].forEach(el => el.addEventListener('input', render));
   upperEl.addEventListener('change', render);
 
-  // шрифты и размеры
+
   fontFamilyEl.addEventListener('change', render);
   titleItalicEl.addEventListener('change', render);
   subBoldEl.addEventListener('change', render);
@@ -671,7 +1189,7 @@
     render();
   });
 
-  // рамка
+
   frameStyleEl.addEventListener('change', render);
   frameColorEl.addEventListener('input', () => { updateHexLabel(); render(); });
   frameWidthEl.addEventListener('input', () => {
@@ -688,7 +1206,7 @@
     render();
   });
 
-  // сохранение
+
   saveBtn.addEventListener('click', () => {
     if (!img) return;
     canvas.toBlob(blob => {
@@ -705,12 +1223,16 @@
 
   clearBtn.addEventListener('click', () => {
     img = null;
+    cropState = null;
+    cropView  = null;
     titleEl.value = '';
     subtitleEl.value = '';
+    cropWrap.classList.remove('active');
+    cropEmpty.style.display = '';
     render();
   });
 
-  // Drag & drop
+
   let dragDepth = 0;
   window.addEventListener('dragenter', e => {
     e.preventDefault();
@@ -729,7 +1251,7 @@
     if (file) loadFile(file);
   });
 
-  // Вставка из буфера
+
   window.addEventListener('paste', e => {
     const items = e.clipboardData?.items;
     if (!items) return;
@@ -740,6 +1262,17 @@
         return;
       }
     }
+  });
+
+
+  let resizeTimer = null;
+  window.addEventListener('resize', () => {
+    if (!img || !cropWrap.classList.contains('active')) return;
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      layoutCropStage();
+      syncCropRect();
+    }, 120);
   });
 
   updateHexLabel();
